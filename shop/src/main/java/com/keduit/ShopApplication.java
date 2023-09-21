@@ -1,4 +1,4 @@
-package com.keduit.shop;
+package com.keduit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
