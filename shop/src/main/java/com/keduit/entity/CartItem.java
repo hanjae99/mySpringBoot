@@ -15,11 +15,11 @@ public class CartItem {
     @Column(name = "cart_item_id")
     private Long id;
 
-    @ManyToOne // 하나의 카트에 여러개의 상품 -> 카트아이템 입장에선 카트와 다대일 관계
+    @ManyToOne(fetch = FetchType.LAZY) // 하나의 카트에 여러개의 상품 -> 카트아이템 입장에선 카트와 다대일 관계
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
