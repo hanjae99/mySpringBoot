@@ -45,7 +45,7 @@ public class MemberController {
         }
 
 //        model.addAttribute("result", "success");
-        re.addFlashAttribute("result", "success");
+        re.addFlashAttribute("result", "signupSuccess");
 
         return "redirect:/";
     }

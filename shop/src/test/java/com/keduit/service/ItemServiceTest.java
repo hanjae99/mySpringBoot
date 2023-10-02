@@ -42,6 +42,7 @@ class ItemServiceTest {
             String path = "Users/hanjae/IdeaProjects/mySpringBoot/shop/src/main/resources/static/images/item/";
             String imageName = "image" + i + ".jpg";
             MockMultipartFile multipartFile =
+                    // 가짜 이미지 데이터 전달 (byte 배열)
                     new MockMultipartFile(path, imageName, "image/jpg", new byte[]{1, 2, 3, 4});
             multipartFileList.add(multipartFile);
         }

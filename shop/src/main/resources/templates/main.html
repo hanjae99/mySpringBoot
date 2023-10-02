@@ -10,8 +10,12 @@
             let result = [[${result}]];
 
             console.log(result);
-            if (result == "success"){
+            if (result == "signupSuccess"){
                 alert("회원가입 성공!");
+            }else if (result == "itemRegisterSuccess"){
+                alert("상품 등록 성공!");
+            }else if (result == "itemModifySuccess"){
+                alert("상품 수정 성공!");
             }
         });
     </script>
