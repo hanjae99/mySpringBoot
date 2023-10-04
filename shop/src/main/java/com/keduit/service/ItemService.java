@@ -2,11 +2,15 @@ package com.keduit.service;
 
 import com.keduit.dto.ItemFormDTO;
 import com.keduit.dto.ItemImgDTO;
+import com.keduit.dto.ItemSearchDTO;
+import com.keduit.dto.MainItemDTO;
 import com.keduit.entity.Item;
 import com.keduit.entity.ItemImg;
 import com.keduit.repository.ItemImgRepository;
 import com.keduit.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,5 +90,17 @@ public class ItemService {
         }
 
         return item.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getAdminItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable){
+
+        return itemRepository.getAdminItemPage(itemSearchDTO, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainItemDTO> getMainItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable){
+
+        return itemRepository.getMainItemPage(itemSearchDTO, pageable);
     }
 }

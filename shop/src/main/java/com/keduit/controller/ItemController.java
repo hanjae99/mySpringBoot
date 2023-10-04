@@ -1,8 +1,13 @@
 package com.keduit.controller;
 
 import com.keduit.dto.ItemFormDTO;
+import com.keduit.dto.ItemSearchDTO;
+import com.keduit.entity.Item;
 import com.keduit.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -90,5 +96,18 @@ public class ItemController {
         re.addFlashAttribute("result", "itemModifySuccess");
 
         return "redirect:/";
+    }
+
+    @GetMapping({"/admin/items", "/admin/items/{page}"})
+    public String itemManage(ItemSearchDTO itemSearchDTO, @PathVariable("page") Optional<Integer> page, Model model){
+
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+        Page<Item> items = itemService.getAdminItemPage(itemSearchDTO, pageable);
+
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDTO", itemSearchDTO);
+        model.addAttribute("maxPage", 5);
+
+        return "item/itemMng";
     }
 }
