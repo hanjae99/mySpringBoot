@@ -8,8 +8,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@NonNull
 public class Cart extends BaseEntity{
 
     @Id
@@ -20,4 +18,11 @@ public class Cart extends BaseEntity{
     @OneToOne(fetch = FetchType.LAZY) // 일대일 매핑
     @JoinColumn(name = "member_id") //join 연산
     private Member member;
+
+    public static Cart createCart(Member member){
+        Cart cart = new Cart();
+        cart.setMember(member);
+
+        return cart;
+    }
 }
