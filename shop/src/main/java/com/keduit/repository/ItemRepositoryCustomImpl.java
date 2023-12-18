@@ -9,6 +9,7 @@ import com.keduit.entity.QItem;
 import com.keduit.entity.QItemImg;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -64,16 +65,24 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     @Override
     public Page<Item> getAdminItemPage(ItemSearchDTO itemSearchDTO, Pageable pageable) {
 
-        QueryResults<Item> results = queryFactory
+        List<Item> content = queryFactory
                 .selectFrom(QItem.item)
-                .where(regDtsAfter(itemSearchDTO.getSearchDateType()), searchSellStatusEq(itemSearchDTO.getSearchSellStatus()), searchByLike(itemSearchDTO.getSearchBy(), itemSearchDTO.getSearchQuery()))
+                .where(regDtsAfter(itemSearchDTO.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDTO.getSearchSellStatus()),
+                        searchByLike(itemSearchDTO.getSearchBy(),
+                                itemSearchDTO.getSearchQuery()))
                 .orderBy(QItem.item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetchResults();
+                .fetch();
 
-        List<Item> content = results.getResults();
-        long total = results.getTotal();
+        long total = queryFactory.select(Wildcard.count).from(QItem.item)
+                .where(regDtsAfter(itemSearchDTO.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDTO.getSearchSellStatus()),
+                        searchByLike(itemSearchDTO.getSearchBy(), itemSearchDTO.getSearchQuery()))
+                .fetchOne()
+                ;
+
         return new PageImpl<>(content, pageable, total);
     }
 
