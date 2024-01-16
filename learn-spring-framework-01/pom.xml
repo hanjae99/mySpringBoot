@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.in28minutes</groupId>
-    <artifactId>learn-spring-framework</artifactId>
+    <artifactId>learn-spring-framework-01</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>learn-spring-framework</name>
     <description>learn-spring-framework</description>
